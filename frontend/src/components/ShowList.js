@@ -6,7 +6,7 @@ const ShowList = ({ onSelectShow }) => {
 
   useEffect(() => {
     const fetchShows = async () => {
-      const res = await axios.get('http://localhost:5000/api/shows');
+      const res = await axios.get('https://movie-application-pdc5.onrender.com/api/shows');
       setShows(res.data);
     };
     fetchShows();

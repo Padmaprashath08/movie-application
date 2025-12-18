@@ -6,7 +6,7 @@ const Payment = () => {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      const res = await axios.get('http://localhost:5000/api/bookings');
+      const res = await axios.get('https://movie-application-pdc5.onrender.com/api/bookings');
       setBookings(res.data);
     };
     fetchBookings();
@@ -14,9 +14,9 @@ const Payment = () => {
 
   const handlePay = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/bookings/${id}/pay`);
+      await axios.put(`https://movie-application-pdc5.onrender.com/api/bookings/${id}/pay`);
       alert('Payment successful');
-      const res = await axios.get('http://localhost:5000/api/bookings');
+      const res = await axios.get('https://movie-application-pdc5.onrender.com/api/bookings');
       setBookings(res.data);
     } catch (err) {
       alert('Payment failed');
@@ -25,9 +25,9 @@ const Payment = () => {
 
   const handleCancel = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/bookings/${id}/cancel`);
+      await axios.put(`https://movie-application-pdc5.onrender.com/api/bookings/${id}/cancel`);
       alert('Booking cancelled & refunded ');
-      const res = await axios.get('http://localhost:5000/api/bookings');
+      const res = await axios.get('https://movie-application-pdc5.onrender.com/api/bookings');
       setBookings(res.data);
     } catch (err) {
       alert('Cancellation failed ');

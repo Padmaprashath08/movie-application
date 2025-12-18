@@ -6,7 +6,7 @@ const Booking = ({ show, onBook }) => {
 
   const handleBook = async () => {
     try {
-      await axios.post('http://localhost:5000/api/bookings', {
+      await axios.post('https://movie-application-pdc5.onrender.com/api/bookings', {
         showId: show._id,
         seats,
       });
