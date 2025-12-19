@@ -11,31 +11,98 @@ function AppContent() {
   const [authMode, setAuthMode] = useState('login');
   const [currentView, setCurrentView] = useState('shows');
   const [selectedShow, setSelectedShow] = useState(null);
+  const [hoveredButton, setHoveredButton] = useState(null);
 
   if (!user) {
     return (
       <div
         style={{
           minHeight: '100vh',
-          background: 'linear-gradient(135deg, #1c1c1c, #2b2b2b)',
+          background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '40px',
           padding: '20px',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <h1 style={{ color: '#fff' }}>🎬 BookMyShow</h1>
+        <div
+          style={{
+            position: 'absolute',
+            width: '600px',
+            height: '600px',
+            background: 'radial-gradient(circle, rgba(248, 68, 100, 0.1), transparent)',
+            borderRadius: '50%',
+            top: '-250px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            filter: 'blur(100px)',
+          }}
+        />
+        
         {authMode === 'login' ? (
-          <div>
+          <div style={{ position: 'relative', zIndex: 1 }}>
             <Login />
-            <p style={{ color: '#fff' }}>Don't have an account? <button onClick={() => setAuthMode('register')} style={{ color: '#f84464' }}>Register</button></p>
+            <p
+              style={{
+                textAlign: 'center',
+                color: '#aaa',
+                marginTop: '25px',
+                fontSize: '15px',
+              }}
+            >
+              Don't have an account?{' '}
+              <button
+                onClick={() => setAuthMode('register')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#f84464',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  textDecoration: 'underline',
+                  transition: 'color 0.3s ease',
+                }}
+                onMouseOver={(e) => (e.target.style.color = '#ff5c8a')}
+                onMouseOut={(e) => (e.target.style.color = '#f84464')}
+              >
+                Create Account
+              </button>
+            </p>
           </div>
         ) : (
-          <div>
+          <div style={{ position: 'relative', zIndex: 1 }}>
             <Register />
-            <p style={{ color: '#fff' }}>Already have an account? <button onClick={() => setAuthMode('login')} style={{ color: '#f84464' }}>Login</button></p>
+            <p
+              style={{
+                textAlign: 'center',
+                color: '#aaa',
+                marginTop: '25px',
+                fontSize: '15px',
+              }}
+            >
+              Already have an account?{' '}
+              <button
+                onClick={() => setAuthMode('login')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#f84464',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  textDecoration: 'underline',
+                  transition: 'color 0.3s ease',
+                }}
+                onMouseOver={(e) => (e.target.style.color = '#ff5c8a')}
+                onMouseOut={(e) => (e.target.style.color = '#f84464')}
+              >
+                Sign In
+              </button>
+            </p>
           </div>
         )}
       </div>
@@ -46,75 +113,129 @@ function AppContent() {
     <div
       style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #1c1c1c, #2b2b2b)',
+        background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%)',
       }}
     >
-      {/* NAVBAR */}
       <div
         style={{
-          background: '#ffffff',
-          padding: '16px 30px',
+          background: 'rgba(30, 30, 46, 0.95)',
+          backdropFilter: 'blur(20px)',
+          padding: '18px 40px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+          boxShadow: '0 4px 30px rgba(0, 0, 0, 0.3)',
           position: 'sticky',
           top: 0,
           zIndex: 100,
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         }}
       >
         <h2
           style={{
             margin: 0,
-            color: '#f84464',
+            fontSize: '28px',
             fontWeight: '800',
+            background: 'linear-gradient(135deg, #f84464, #ff5c8a)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            letterSpacing: '-0.5px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
           }}
         >
-          🎬 BookMyShow
+          BookMyShow
         </h2>
 
-        <div>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <button
-            onClick={() => { setCurrentView('shows'); setSelectedShow(null); }}
+            onClick={() => {
+              setCurrentView('shows');
+              setSelectedShow(null);
+            }}
+            onMouseEnter={() => setHoveredButton('shows')}
+            onMouseLeave={() => setHoveredButton(null)}
             style={{
-              padding: '10px 18px',
-              background: currentView === 'shows' ? '#f84464' : '#ccc',
+              padding: '12px 24px',
+              background:
+                currentView === 'shows'
+                  ? 'linear-gradient(135deg, #f84464, #ff5c8a)'
+                  : 'rgba(255, 255, 255, 0.05)',
               color: '#ffffff',
-              border: 'none',
-              borderRadius: '10px',
-              fontWeight: '600',
+              border:
+                currentView === 'shows'
+                  ? 'none'
+                  : '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '12px',
+              fontWeight: '700',
+              fontSize: '15px',
               cursor: 'pointer',
-              marginRight: '10px',
+              transition: 'all 0.3s ease',
+              boxShadow:
+                currentView === 'shows'
+                  ? '0 8px 20px rgba(248, 68, 100, 0.4)'
+                  : 'none',
+              transform:
+                hoveredButton === 'shows' && currentView !== 'shows'
+                  ? 'translateY(-2px)'
+                  : 'translateY(0)',
             }}
           >
             Shows
           </button>
           <button
             onClick={() => setCurrentView('payment')}
+            onMouseEnter={() => setHoveredButton('bookings')}
+            onMouseLeave={() => setHoveredButton(null)}
             style={{
-              padding: '10px 18px',
-              background: currentView === 'payment' ? '#f84464' : '#ccc',
+              padding: '12px 24px',
+              background:
+                currentView === 'payment'
+                  ? 'linear-gradient(135deg, #f84464, #ff5c8a)'
+                  : 'rgba(255, 255, 255, 0.05)',
               color: '#ffffff',
-              border: 'none',
-              borderRadius: '10px',
-              fontWeight: '600',
+              border:
+                currentView === 'payment'
+                  ? 'none'
+                  : '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '12px',
+              fontWeight: '700',
+              fontSize: '15px',
               cursor: 'pointer',
-              marginRight: '10px',
+              transition: 'all 0.3s ease',
+              boxShadow:
+                currentView === 'payment'
+                  ? '0 8px 20px rgba(248, 68, 100, 0.4)'
+                  : 'none',
+              transform:
+                hoveredButton === 'bookings' && currentView !== 'payment'
+                  ? 'translateY(-2px)'
+                  : 'translateY(0)',
             }}
           >
             My Bookings
           </button>
           <button
             onClick={logout}
+            onMouseEnter={() => setHoveredButton('logout')}
+            onMouseLeave={() => setHoveredButton(null)}
             style={{
-              padding: '10px 18px',
+              padding: '12px 24px',
               background: 'linear-gradient(135deg, #e74c3c, #ff6b6b)',
               color: '#ffffff',
               border: 'none',
-              borderRadius: '10px',
-              fontWeight: '600',
+              borderRadius: '12px',
+              fontWeight: '700',
+              fontSize: '15px',
               cursor: 'pointer',
-              boxShadow: '0 8px 18px rgba(231,76,60,0.4)',
+              boxShadow: '0 8px 20px rgba(231, 76, 60, 0.4)',
+              transition: 'all 0.3s ease',
+              transform:
+                hoveredButton === 'logout'
+                  ? 'translateY(-2px)'
+                  : 'translateY(0)',
             }}
           >
             Logout
@@ -122,13 +243,14 @@ function AppContent() {
         </div>
       </div>
 
-      <div
-        style={{
-          padding: '30px 20px',
-        }}
-      >
+      <div>
         {currentView === 'shows' && (
-          <ShowList onSelectShow={(show) => { setSelectedShow(show); setCurrentView('booking'); }} />
+          <ShowList
+            onSelectShow={(show) => {
+              setSelectedShow(show);
+              setCurrentView('booking');
+            }}
+          />
         )}
         {currentView === 'booking' && selectedShow && (
           <Booking show={selectedShow} onBook={() => setCurrentView('payment')} />

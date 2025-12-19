@@ -2,14 +2,9 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Show = require('./models/Show');
 
-async function seed() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('Connected to MongoDB');
-
+mongoose.connect(process.env.MONGO_URI)
+  .then(async () => {
+    console.log('Seeding database...');
     const shows = [
       {
         title: 'Avengers: Endgame',
@@ -32,16 +27,8 @@ async function seed() {
         price: 12,
       },
     ];
-
-    console.log('Inserting shows:', shows.length);
-    const inserted = await Show.insertMany(shows);
-    console.log('Inserted shows:', inserted.length);
-
-    await mongoose.disconnect();
-    console.log('Seed completed and disconnected');
-  } catch (err) {
-    console.error('Seeding error:', err);
-  }
-}
-
-seed();
+    await Show.insertMany(shows);
+    console.log('Seeded successfully');
+    process.exit();
+  })
+  .catch(err => console.log(err));
